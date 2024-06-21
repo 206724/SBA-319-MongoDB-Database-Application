@@ -39,10 +39,10 @@ exports.getSong = async (req, res) => {
 // Update a song by ID
 exports.updateSong = async (req, res) => {
  const songId = req.params.id;
- const { title, description } = req.body;
+ const {  title, description,comment,genre,rating,artistEmail } = req.body;
  try {
    const updatedSong = await Song.findByIdAndUpdate(
-   songId,{ title, description },{ new: true });
+   songId,{  title, description,comment,genre,rating,artistEmail },{ new: true });
    if (!updatedSong) {
        return res.status(404).json({ error: 'Song not found' });
    }
@@ -65,3 +65,32 @@ exports.deleteSong = async (req, res) => {
    res.status(500).json({ error: 'An error occurred while deleting the song' });
  }
 };
+
+//updating comment
+exports.updateComment = async (req, res) => {
+  const songId = req.params.id;
+  const {  title, description,comment,genre,rating,artistEmail } = req.body;
+  try {
+    const updatedSong = await Song.findByIdAndUpdate(
+    songId,{  title, description,comment,genre,rating,artistEmail },{ new: true });
+    if (!updatedSong) {
+        return res.status(404).json({ error: 'Song not found' });
+    }
+    res.json(updatedSong);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while updating the song' });
+  }
+ };
+
+ exports.getComment= async (req, res) => {
+  const songId = req.params.id;
+  try {
+    const song = await Song.findById(songId);
+      if (!song) {
+        return res.status(404).json({ error: 'Song not found' });
+        }
+        res.json(song);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while fetching the song' });
+  }
+ };
