@@ -2,9 +2,9 @@
 const Song = require('../models/song');
 // Create a new song
 exports.createSong = async (req, res) => {
- const { title, description } = req.body;
+ const { title, description,comment,genre,rating,artistEmail } = req.body;
  try {
-   const song = new Song({ title, description });
+   const song = new Song({ title, description,comment,genre,rating,artistEmail });
    const savedSong = await song.save();
    res.status(201).json(savedSong);
  } catch (error) {
